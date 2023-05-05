@@ -31,7 +31,6 @@ function getDifficultyLabel(s: number): DifficultyLabel {
   return difficultyMap[s]
 }
 
-// TODO: after an upload, scroll to the newly uploaded song / make it focused.
 export default function SelectSongPage() {
   const [songs, addSongs] = useSongManifest()
   const [isUploadFormOpen, setUploadForm] = useState<boolean>(false)
@@ -50,10 +49,6 @@ export default function SelectSongPage() {
     }
   })
 
-  const handleAddNew = (e: any) => {
-    setUploadForm(true)
-    e.stopPropagation()
-  }
 
   const handleCloseAddNew = () => {
     setUploadForm(false)
@@ -61,9 +56,6 @@ export default function SelectSongPage() {
 
   return (
     <>
-      <Head>
-        <title>Sightread: Select a song</title>
-      </Head>
       <SongPreviewModal
         show={!!selectedSongId}
         songMeta={selectedSongMeta}
@@ -77,30 +69,18 @@ export default function SelectSongPage() {
       <div className="bg-purple-lightest w-full h-screen flex flex-col">
         <AppBar />
         <div className="p-6 mx-auto max-w-screen-lg flex flex-col flex-grow w-full">
-          <h2 className="text-3xl">Learn a song</h2>
+          <h2 className="text-3xl">学习</h2>
           <Sizer height={8} />
-          <h3 className="text-base"> Select a song, choose your settings, and begin learning</h3>
+          <h3 className="text-base"> 选择歌曲，选择设置，然后开始学习</h3>
           <Sizer height={24} />
           <div className="flex gap-4">
-            <SearchBox placeholder={'Search Songs by Title or Artist'} onSearch={setSearch} />
-            <button
-              className={clsx(
-                'hidden sm:flex whitespace-nowrap flex-nowrap',
-                'py-2 px-4 items-center rounded-md gap-1',
-                'bg-purple-dark transition hover:bg-purple-hover text-white',
-              )}
-              onClick={handleAddNew}
-            >
-              <Plus width={20} height={20} />
-              <span>Add New</span>
-            </button>
+            <SearchBox placeholder={'搜索歌曲名'} onSearch={setSearch} />
           </div>
           <Sizer height={32} />
           <Table
             columns={[
-              { label: 'Title', id: 'title', keep: true },
+              { label: '歌曲名', id: 'title', keep: true },
               { label: 'Artist', id: 'artist', keep: true },
-              // { label: 'Difficulty', id: 'difficulty', format: getDifficultyLabel as any },
               {
                 label: 'Length',
                 id: 'duration',
