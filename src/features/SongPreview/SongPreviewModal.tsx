@@ -32,6 +32,7 @@ export default function SongPreviewModal({
 
   function handlePlayNow() {
     router.push(`/play?id=${id}&source=${source}`)
+    debugger
   }
 
   function handleClose() {

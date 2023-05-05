@@ -9,10 +9,6 @@ import { Dropdown } from './Dropdown'
 type NavItem = { route: string; label: string }
 const navItems: NavItem[] = [
   { route: '/songs', label: 'Learn a song' },
-  { route: '/freeplay', label: 'Free play' },
-  // TODO: launch phrases.
-  // { route: '/training/phrases', label: 'Training' },
-  { route: '/about', label: 'About' },
 ]
 
 export default function AppBar() {
