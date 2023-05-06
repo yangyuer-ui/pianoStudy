@@ -14,30 +14,18 @@ export function getKey(id: string, source: SongSource) {
   return `${source}/${id}`
 }
 
-function getSongUrl(id: string, source: SongSource) {
-  return `/api/midi?id=${id}&source=${source}`
+function getSongUrl( savePath: string) {
+  return  `http://${sessionStorage.getItem('ipPath')}${savePath}`
 }
 
-export function useSong(id: string, source: SongSource): FetchState<Song> {
+export function useSong( savePath: string): FetchState<Song> {
+  debugger
   const url =
-    id && source && (source === 'midishare' || source === 'builtin')
-      ? getSongUrl(id, source)
+  savePath? getSongUrl(savePath)
       : undefined
   const fetchState = useFetch(url, handleSong)
-  const uploadState: FetchState<Song> = useMemo(() => {
-    if (source !== 'upload') {
-      return { status: 'idle' }
-    }
 
-    const data = getUploadedSong(id)
-    if (data) {
-      return { status: 'success', data }
-    } else {
-      return { status: 'error', error: new Error(`Could not find uploaded song: ${id}`) }
-    }
-  }, [id, source])
-
-  return source === 'upload' ? uploadState : fetchState
+  return  fetchState
 }
 
 // TODO: replace with a signals-like library, so that setting from one component is reflected elsewhere.
@@ -46,7 +34,7 @@ export function useSongManifest(): SongManifestHookReturn {
   const [songs, setSongs] = useState<SongMetadata[]>(library.getSongsMetadata())
 
   const add = useCallback((metadataList: SongMetadata[]): void => {
-    library.addMetadata(metadataList)
+    // library.addMetadata(metadataList)
     setSongs(library.getSongsMetadata())
   }, [])
 

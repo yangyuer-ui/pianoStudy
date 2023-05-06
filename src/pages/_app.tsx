@@ -8,7 +8,7 @@ import { Inter } from 'next/font/google'
 
 import * as analytics from '@/features/analytics'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
-import { addMetadata } from '@/features/data/library'
+// import { addMetadata } from '@/features/data/library'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,7 +26,7 @@ function App({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   if (pageProps.songMetadata) {
-    addMetadata(pageProps.songMetadata)
+    // addMetadata(pageProps.songMetadata)
   }
 
   return (

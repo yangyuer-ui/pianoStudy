@@ -23,7 +23,7 @@ import { MidiModal } from './components/MidiModal'
 
 export function PlaySong() {
   const router = useRouter()
-  const { source, id, recording }: { source: SongSource; id: string; recording?: string } =
+  const { source, id, savePath,recording }: { source: SongSource; id: string; recording?: string } =
     router.query as any
   const [settingsOpen, setSettingsPanel] = useState(false)
   const [isMidiModalOpen, setMidiModal] = useState(false)
@@ -32,11 +32,11 @@ export function PlaySong() {
   const [soundOff, setSoundOff] = useState(false)
   const player = Player.player()
   const synth = useSingleton(() => getSynthStub('acoustic_grand_piano'))
-  let { data: song, error } = useSong(id, source)
-  const [songConfig, setSongConfig] = useSongSettings(id)
+  let { data: song, error } = useSong(savePath)
+  const [songConfig, setSongConfig] = useSongSettings(savePath)
   const [range, setRange] = useState<{ start: number; end: number } | undefined>(undefined)
   const isRecording = !!recording
-  const songMeta = useSongMetadata(id, source)
+  const songMeta = useSongMetadata(id, 'midishare')
   useWakeLock()
 
   const hand =
@@ -105,9 +105,9 @@ export function PlaySong() {
   )
 
   // If source or id is messed up, redirect to the homepage
-  if (router.isReady && (!source || !id)) {
-    router.replace('/')
-  }
+  // if (router.isReady && (!source || !id)) {
+  //   router.replace('/')
+  // }
 
   const handleLoopingToggle = (b: boolean) => {
     if (!b) {
@@ -141,14 +141,14 @@ export function PlaySong() {
         {!isRecording && (
           <>
             <TopBar
-              title={songMeta?.title}
+              title={songMeta?.midiName}
               isLoading={!playerState.canPlay}
               isPlaying={playerState.playing}
               onTogglePlaying={playerActions.toggle}
               onClickRestart={playerActions.stop}
               onClickBack={() => {
                 playerActions.stop()
-                router.push('/')
+                // router.push('/')
               }}
               onClickMidi={(e) => {
                 e.stopPropagation()

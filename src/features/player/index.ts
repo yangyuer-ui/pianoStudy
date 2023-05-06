@@ -80,7 +80,6 @@ class Player {
 
   constructor() {
     midi.subscribe((midiEvent) => this.processMidiEvent(midiEvent))
-    debugger
   }
 
   getSong() {

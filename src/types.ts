@@ -13,13 +13,9 @@ export type DifficultyLabel =
 
 export type SongSource = 'midishare' | 'upload' | 'builtin' | 'generated'
 export type SongMetadata = {
-  id: string
-  file: string
-  title: string
-  artist: string
-  difficulty: number
-  duration: number
-  source: SongSource
+  fileType:string
+  midiName:string
+  savePath:string
 }
 
 export interface Size {

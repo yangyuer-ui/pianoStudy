@@ -5,14 +5,12 @@ import { SongPreviewModal } from '@/features/SongPreview'
 import { AppBar, Modal, Sizer } from '@/components'
 import { DifficultyLabel, SongMetadata } from '@/types'
 import { useEventListener } from '@/hooks'
-import { Plus } from '@/icons'
 import { SearchBox } from './components/Table/SearchBox'
-import clsx from 'clsx'
 import { UploadForm, Table } from './components'
-import Head from 'next/head'
 import { useSongManifest } from '@/features/data'
 import { getUploadedLibrary } from '@/features/persist'
 
+import { searchMidi,getAPi } from '@/api/midi'
 function getDifficultyLabel(s: number): DifficultyLabel {
   if (!s) {
     return '-'
@@ -30,18 +28,26 @@ function getDifficultyLabel(s: number): DifficultyLabel {
   }
   return difficultyMap[s]
 }
-
-export default function SelectSongPage() {
-  const [songs, addSongs] = useSongManifest()
+export default  function SelectSongPage() {
+  let [songs,setSongs] = useState([])
+  const [search, setSearch] = useState('周杰伦')
+  const getMidi = async () => {
+      const res1 = await getAPi();
+      if(res1){
+        sessionStorage.setItem('ipPath', res1.data.ip)
+        let res = await searchMidi(sessionStorage.getItem('ipPath'), { 'searchMidi': search });
+        if (res.status === 200) {
+          setSongs(res.data.seatchResList);
+        }
+      }
+  }
   const [isUploadFormOpen, setUploadForm] = useState<boolean>(false)
-  const [selectedSongId, setSelectedSongId] = useState<any>('')
-  const selectedSongMeta = songs.find((s) => s.id === selectedSongId)
-  const [search, setSearch] = useState('')
-
+  const [midiName, setmidiName] = useState<any>('')
+  const selectedSongMeta = songs.find((s:any) => s.savePath === midiName)
   const uploadedLibrary = getUploadedLibrary()
   useEffect(() => {
-    addSongs(uploadedLibrary)
-  }, [uploadedLibrary, addSongs])
+     getMidi();
+  }, [uploadedLibrary])
 
   useEventListener<KeyboardEvent>('keydown', (event) => {
     if (event.key === 'Escape') {
@@ -49,18 +55,16 @@ export default function SelectSongPage() {
     }
   })
 
-
   const handleCloseAddNew = () => {
     setUploadForm(false)
   }
-
   return (
     <>
       <SongPreviewModal
-        show={!!selectedSongId}
+        show={midiName  }
         songMeta={selectedSongMeta}
         onClose={() => {
-          setSelectedSongId(null)
+          setmidiName(null)
         }}
       />
       <Modal show={isUploadFormOpen} onClose={handleCloseAddNew}>
@@ -79,19 +83,13 @@ export default function SelectSongPage() {
           <Sizer height={32} />
           <Table
             columns={[
-              { label: '歌曲名', id: 'title', keep: true },
-              { label: 'Artist', id: 'artist', keep: true },
-              {
-                label: 'Length',
-                id: 'duration',
-                format: (n) => formatTime(n),
-              },
-              { label: 'Source', id: 'source' },
+              { label: '歌曲名', id: 'midiName', keep: true },
+              { label: 'Source', id: 'savePath',keep: true},
             ]}
-            getId={(s: SongMetadata) => s.id}
+            getId={(s: SongMetadata) => s.savePath}
             rows={songs}
-            filter={['title', 'artist']}
-            onSelectRow={setSelectedSongId}
+            filter={['midiName', 'savePath']}
+            onSelectRow={setmidiName}
             search={search}
           />
         </div>

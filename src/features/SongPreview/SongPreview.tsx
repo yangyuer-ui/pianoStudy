@@ -9,12 +9,12 @@ interface SongPreviewProps {
   songBytes?: ArrayBuffer
   songId: string
   source: SongSource
-  className?: string
+  className?: string,
 }
 
-function SongPreview({ songId, source, className }: SongPreviewProps) {
+function SongPreview({ songId, savePath, className }: SongPreviewProps) {
   const player = Player.player()
-  const { data: song, error } = useSong(songId, source)
+  const { data: song, error } = useSong(savePath)
 
   useEffect(() => {
     if (!song) {

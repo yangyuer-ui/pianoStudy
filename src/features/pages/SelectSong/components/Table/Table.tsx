@@ -5,6 +5,10 @@ import { useWindowWidth } from '@/hooks'
 import { TableProps, Row, RowValue } from './types'
 import { sortBy } from './utils'
 import { TableHead } from './TableHead'
+import { searchMidi } from '@/api/midi'
+import { __String } from 'typescript'
+import { stringify } from 'querystring'
+
 
 export default function Table<T extends Row>({
   columns,
@@ -15,6 +19,7 @@ export default function Table<T extends Row>({
   getId,
 }: TableProps<T>) {
   const [sortCol, setSortCol] = useState(1)
+
   const isSmall = useWindowWidth() < breakpoints.sm
   let rowHeight = 50
 
@@ -29,10 +34,9 @@ export default function Table<T extends Row>({
       setSortCol(index)
     }
   }
-
   const isSearchMatch = (s: RowValue = '') =>
     !search || String(s).toUpperCase().includes(search.toUpperCase())
-  const filtered = !search ? rows : rows.filter((row) => filter.some((f) => isSearchMatch(row[f])))
+  const filtered = !search ? rows : rows.filter((row) => row.midiName==search)
   const sortField = columns[Math.abs(sortCol) - 1].id
   const sorted = sortBy<T>((row) => row[sortField] ?? 0, sortCol < 0, filtered)
   const gridTemplateColumns = `repeat(${columns.length}, 1fr)`
@@ -58,10 +62,10 @@ export default function Table<T extends Row>({
               <div
                 className="cursor-pointer contents group"
                 onClick={(e) => {
-                  e.stopPropagation()
+                  e.stopPropagation();
                   onSelectRow(getId(row))
                 }}
-                key={`row-${getId(row)}`}
+                key={i}
               >
                 {columns.map((col, j) => {
                   let cellValue = !!col.format ? col.format(row[col.id]) : row[col.id]

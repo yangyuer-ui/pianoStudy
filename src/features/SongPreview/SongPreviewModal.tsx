@@ -17,7 +17,7 @@ export default function SongPreviewModal({
   onClose = () => {},
   songMeta = undefined,
 }: ModalProps) {
-  const { title, artist, id, source } = songMeta ?? {}
+  const { savePath,midiName } = songMeta ?? {}
   const router = useRouter()
   const [playerState, playerActions] = usePlayerState()
 
@@ -31,8 +31,7 @@ export default function SongPreviewModal({
   })
 
   function handlePlayNow() {
-    router.push(`/play?id=${id}&source=${source}`)
-    debugger
+    router.push(`/play?id=${midiName}&savePath=${savePath}`)
   }
 
   function handleClose() {
@@ -40,16 +39,13 @@ export default function SongPreviewModal({
     return onClose()
   }
 
-  if (!show || !id || !source) {
-    return null
-  }
 
   return (
-    <Modal show={show && !!id} onClose={handleClose} className="min-w-[min(100%,600px)]">
+    <Modal show={show} onClose={handleClose} className="min-w-[min(100%,600px)]">
       <div className="flex flex-col gap-3 p-8">
         <div className="flex flex-col w-full whitespace-nowrap">
-          <span className="font-semibold text-2xl">{title}</span>
-          <span className="overflow-hidden text-base text-gray-500">{artist}</span>
+          <span className="font-semibold text-2xl">{midiName}</span>
+          <span className="overflow-hidden text-base text-gray-500">{midiName}</span>
         </div>
         <div className="flex rounded-md flex-col flex-grow overflow-hidden">
           <div className="relative">
@@ -75,14 +71,14 @@ export default function SongPreviewModal({
                 playerActions.play()
               }}
             />
-            {id && source && <SongPreview songId={id} source={source} />}
+            { <SongPreview savePath={savePath} source={'midishare'} />}
           </div>
           <Sizer height={16} />
           <button
             className="w-full text-white h-10 border-none cursor-pointer rounded-md text-xl transition bg-purple-primary hover:bg-purple-hover"
             onClick={handlePlayNow}
           >
-            Play Now
+            开 始
           </button>
         </div>
       </div>
