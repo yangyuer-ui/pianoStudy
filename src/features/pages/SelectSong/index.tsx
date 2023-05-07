@@ -30,7 +30,7 @@ function getDifficultyLabel(s: number): DifficultyLabel {
 }
 export default  function SelectSongPage() {
   let [songs,setSongs] = useState([])
-  const [search, setSearch] = useState('周杰伦')
+  const [search, setSearch] = useState('')
   const getMidi = async () => {
       const res1 = await getAPi();
       if(res1){

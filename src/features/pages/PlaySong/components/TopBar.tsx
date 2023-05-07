@@ -47,7 +47,7 @@ export default function TopBar({
           'sm:absolute sm:left-1/2 sm:-translate-x-3/4',
         )}
       >
-        <ButtonWithTooltip tooltip="Restart">
+        <ButtonWithTooltip tooltip="重开">
           <SkipBack size={24} onClick={onClickRestart} />
         </ButtonWithTooltip>
         <StatusIcon isPlaying={isPlaying} isLoading={isLoading} onTogglePlaying={onTogglePlaying} />

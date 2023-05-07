@@ -12,7 +12,7 @@ export default function StatusIcon({
 }) {
   if (isPlaying) {
     return (
-      <ButtonWithTooltip tooltip="Pause" onClick={onTogglePlaying}>
+      <ButtonWithTooltip tooltip="暂停" onClick={onTogglePlaying}>
         <Pause size={24} />
       </ButtonWithTooltip>
     )
@@ -20,7 +20,7 @@ export default function StatusIcon({
 
   if (!isLoading) {
     return (
-      <ButtonWithTooltip tooltip="Play" onClick={onTogglePlaying}>
+      <ButtonWithTooltip tooltip="开始" onClick={onTogglePlaying}>
         <Play size={24} />
       </ButtonWithTooltip>
     )

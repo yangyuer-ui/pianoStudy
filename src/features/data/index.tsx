@@ -19,7 +19,6 @@ function getSongUrl( savePath: string) {
 }
 
 export function useSong( savePath: string): FetchState<Song> {
-  debugger
   const url =
   savePath? getSongUrl(savePath)
       : undefined

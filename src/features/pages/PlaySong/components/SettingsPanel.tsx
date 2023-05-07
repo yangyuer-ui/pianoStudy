@@ -61,22 +61,22 @@ export default function SettingsPanel(props: SidebarProps) {
       className="flex flex-col sm:flex-row relative w-full bg-gray-100 p-4 gap-4 overflow-auto max-h-[calc(100vh-300px)]"
       ref={sidebarRef}
     >
-      <h3 className="text-2xl text-purple-primary text-center">Settings</h3>
+      <h3 className="text-2xl text-purple-primary text-center">设置</h3>
       <div className="flex flex-col items-center sm:items-stretch sm:flex-row gap-4 whitespace-nowrap flex-wrap flex-grow">
-        <Section title="Speed" className="flex flex-grow">
+        <Section title="速度" className="flex flex-grow">
           <BpmDisplay />
         </Section>
-        <Section title="Hands" className="flex flex-col flex-grow">
+        <Section title="手" className="flex flex-col flex-grow">
           <div className="flex gap-2 justify-center">
-            <span className="w-10">Left</span>
+            <span className="w-10">左</span>
             <Toggle className="self-center" checked={left} onChange={() => handleHand('left')} />
           </div>
           <div className="flex gap-2 justify-center">
-            <span className="w-10">Right</span>
+            <span className="w-10">右</span>
             <Toggle checked={right} onChange={() => handleHand('right')} />
           </div>
         </Section>
-        <Section title="Visualization" className="flex-grow">
+        <Section title="可视化" className="flex-grow">
           <button
             className="flex gap-1 items-center justify-center"
             onClick={() => handleVisualization('falling-notes')}
@@ -87,32 +87,32 @@ export default function SettingsPanel(props: SidebarProps) {
               checked={visualization === 'falling-notes'}
               readOnly
             />
-            <span className="block w-[120px] text-left">Falling notes</span>
+            <span className="block w-[120px] text-left">坠落的音符</span>
           </button>
           <button
             className="flex gap-1 items-center justify-center"
             onClick={() => handleVisualization('sheet')}
           >
             <input className="w-5" type="radio" checked={visualization === 'sheet'} readOnly />
-            <span className="block w-[120px] text-left"> Sheet hero (beta)</span>
+            <span className="block w-[120px] text-left">滚动音符（测试版）</span>
           </button>
         </Section>
         <div className="flex gap-4 flex-grow flex-col sm:flex-row">
-          <Section title="Additional settings" className="flex-grow justify-center">
+          <Section title="其他设置" className="flex-grow justify-center">
             <div className="flex justify-center">
-              <span className="min-w-[15ch]">Wait mode</span>
+              <span className="min-w-[15ch]">等待模式</span>
               <Toggle className="" checked={waiting} onChange={handleWaiting} />
             </div>
             <div className="flex justify-center">
-              <span className="min-w-[15ch]">Display note letter</span>
+              <span className="min-w-[15ch]">显示音符字母</span>
               <Toggle checked={noteLetter} onChange={handleNotes} />
             </div>
             <div className="flex justify-center">
-              <span className="min-w-[15ch]">Colored notes</span>
+              <span className="min-w-[15ch]">彩色音符</span>
               <Toggle checked={coloredNotes} onChange={handleColoredNotes} />
             </div>
             <div className="flex justify-center">
-              <span className="min-w-[15ch]">Key signature</span>
+              <span className="min-w-[15ch]">音调符号</span>
               <select
                 name="keySignature"
                 className="border w-[50px]"
@@ -126,13 +126,13 @@ export default function SettingsPanel(props: SidebarProps) {
             </div>
           </Section>
           <div className="flex flex-col gap-4 justify-between flex-grow">
-            <Section title="Practice loop">
+            <Section title="练习循环">
               <div className="flex justify-center">
                 <Toggle checked={isLooping} onChange={onLoopToggled} />
               </div>
             </Section>
             <Section
-              title="Track configuration"
+              title="轨道配置"
               onClick={() => setShowTrackConfig((b) => !b)}
               className="cursor-pointer hover:bg-purple-light"
             ></Section>

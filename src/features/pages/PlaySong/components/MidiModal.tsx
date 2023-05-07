@@ -18,10 +18,10 @@ export function MidiModal(props: MidiModalProps) {
   return (
     <Modal show={isOpen} onClose={onClose}>
       <div className="relative text-base p-8 flex flex-col w-[min(100vw,500px)]">
-        <h1 className="text-3xl font-bold">Connect Your Piano</h1>
+        <h1 className="text-3xl font-bold">连接钢琴</h1>
         <Sizer height={32} />
         <div className="flex gap-3">
-          <h1 className="text-lg font-medium">Available devices</h1>
+          <h1 className="text-lg font-medium">可用设备</h1>
           <button
             style={{ animationIterationCount: 0.5 }}
             className={clsx('hover:text-purple-hover', animating && 'animate-spin')}
@@ -40,7 +40,7 @@ export function MidiModal(props: MidiModalProps) {
         <div className="flex flex-col gap-1 min-h-[200px] bg-gray-100 rounded-md">
           {!inputs?.size && (
             <span className="p-5 text-gray-900">
-              No devices found. Please connect a MIDI device and hit refresh.
+             找不到设备。请连接MIDI设备并点击刷新。
             </span>
           )}
           {inputs &&

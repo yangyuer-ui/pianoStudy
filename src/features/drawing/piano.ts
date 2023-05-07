@@ -100,6 +100,7 @@ export function drawPianoRoll(
       topRadius: 0,
       bottomRadius: width / 10,
     })
+    
     const isC = getKey(+midiNote) == 'C'
     if (isC) {
       const octave = getOctave(+midiNote)

@@ -190,11 +190,11 @@ async function getMeasuresForChord(
   clef: Clef,
 ): Promise<Measure[]> {
   const chordAndHighOrLow = irishMidiFiles[chord]
-  let filename = `/music/irish/Right Hand/${chordAndHighOrLow}_Lvl_${level}.mid`
+  // let filename = `/music/irish/Right Hand/${chordAndHighOrLow}_Lvl_${level}.mid`
   if (clef === 'bass') {
     const chord = chordAndHighOrLow.slice(0, chordAndHighOrLow.indexOf('_'))
     const bassLevel = Math.min(2, level)
-    filename = `/music/irish/Left Hand/${chord.toString()}_Lvl_${bassLevel}_LH.mid`
+    // filename = `/music/irish/Left Hand/${chord.toString()}_Lvl_${bassLevel}_LH.mid`
   }
 
   const handler: ResponseHandler<Measure[]> = (res) =>
@@ -229,7 +229,7 @@ type ChordProgression = 'eMinor' | 'dMajor' | 'random'
 
 async function getBackingTrack(type: ChordProgression): Promise<HTMLAudioElement> {
   const filename = randomChoice(type === 'eMinor' ? eMinorBackingTracks : dMajorBackingTracks)!
-  const url = `/music/irish/Backing Tracks/${filename}`
+  // const url = `/music/irish/Backing Tracks/${filename}`
   const track = new Audio(url)
   const deferred: Deferred<HTMLAudioElement> = new Deferred()
   track.addEventListener('canplaythrough', () => deferred.resolve(track))

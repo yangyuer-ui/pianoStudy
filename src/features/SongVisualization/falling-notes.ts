@@ -43,6 +43,7 @@ function getActiveNotes(state: State, inViewNotes: SongNote[]): Map<number, stri
       activeNotes.set(note.midiNote, getNoteColor(state, note))
     }
   }
+  
   return activeNotes
 }
 
@@ -143,6 +144,7 @@ export function renderFallingVis(givenState: GivenState): void {
     state.pianoMeasurements,
     state.pianoTopY,
     getActiveNotes(state, items.filter((i) => i.type === 'note') as any),
+    
   )
 }
 
