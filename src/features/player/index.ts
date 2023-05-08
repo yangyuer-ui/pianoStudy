@@ -133,7 +133,7 @@ class Player {
         this.score.streak.value++
         this.hitNotes.add(lateNote)
         if (this.skipMissedNotes) {
-          this.playNote(lateNote)
+          // this.playNote(lateNote)
         }
         return
       }
@@ -351,7 +351,7 @@ class Player {
   }
 
   playNote(note: SongNote) {
-    this.synths[note.track].playNote(note.midiNote, note.velocity)
+    // this.synths[note.track].playNote(note.midiNote, note.velocity)
   }
 
   stopNotes(notes: Array<SongNote>) {

@@ -20,7 +20,7 @@ import { TopBar, SettingsPanel } from './components'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { MidiModal } from './components/MidiModal'
-import {websocket} from 'websocket'
+import { websocket } from 'websocket'
 
 export function PlaySong() {
   const router = useRouter()
@@ -84,14 +84,14 @@ export function PlaySong() {
   })
 
   useEffect(() => {
-    var ws = new WebSocket("ws://localhost:5001/playState/1 ");
+    var ws = new WebSocket("ws://localhost:5001/playWeb");
     //申请一个WebSocket对象，参数是服务端地址，同http协议使用http://开头一样，WebSocket协议的url使用ws://开头，另外安全的WebSocket协议使用wss://开头
     ws.onopen = function () {
       //当WebSocket创建成功时，触发onopen事件
       console.log("websocket连接成功");
       //ws.send("hello"); //将消息发送到服务端
     }
-    
+
     ws.onclose = function (e) {
       //当客户端收到服务端发送的关闭连接请求时，触发onclose事件
       console.log("websocket已断开");
@@ -100,28 +100,39 @@ export function PlaySong() {
       //如果出现连接、处理、接收、发送数据失败的时候触发onerror事件
       console.log("websocket发生错误" + error);
     }
+    type MidiEvent = {
+      type: 'on' | 'off'
+      velocity: number
+      note: number
+    }
+    function parseMidiMessage(event:any): MidiEvent | null {
+console.log('jieshou'+event.data);
+
+      const data = event.data
+      let status = data[0]
+      let command = data.split(',')
+      return {
+        type: command[0]==='144' ? 'on' : 'off',
+        note: command[1]*1,
+        velocity: command[2]*1,
+      }
+    }
+    
     ws.onmessage = function (e) {
-      if (e.data)
-       {
-        const handleMidiEvent = ({ type, note }: MidiStateEvent) => {
-          // if (type === 'down' && !soundOff) {
-          //   // console.log('点击了'+note);
-          //   synth.playNote(note)
-          // } else {
-          //   // console.log('放开了'+note);
-          //   synth.stopNote(note)
-          // }
+      if (e.data) {
+        const msg: MidiEvent|null=parseMidiMessage(e);
+        if (!msg) {
+          return
         }
-        midiState.subscribe(handleMidiEvent)
-        // midiState.subscribe(handleMidiEvent)
-        return function cleanup() {
-          midiState.unsubscribe(handleMidiEvent)
+        const { note, velocity } = msg
+        if (msg.type === 'on' && msg.velocity > 0) {
+          midiState.press(note, velocity)
+        } else {
+          midiState.release(note)
         }
       }
-
     }
-
-  }, [player, synth, song, songConfig, soundOff])
+    }, [player, synth, song, songConfig, soundOff])
 
   const handleSetRange = useCallback(
     (range?: { start: number; end: number }) => {
