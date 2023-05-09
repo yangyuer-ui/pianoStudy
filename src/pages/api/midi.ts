@@ -7,7 +7,7 @@ import { SongMetadata } from '@/types'
 import https from 'https'
 
 const songManifest = require('@/manifest.json')
-const map: Map<string, SongMetadata> = new Map(songManifest.map((s: SongMetadata) => [s.id, s]))
+const map: Map<string, SongMetadata> = new Map(songManifest.map((s: SongMetadata) => [s.savePath, s]))
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const { id, source } = req.query
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   let stream: Stream
   if (source === 'builtin') {
-    const path = map.get(id)?.file
+    const path = map.get(id)?.savePath
     if (!path) {
       res.status(404).send(`Could not find midi with id: "${id}"`)
     }

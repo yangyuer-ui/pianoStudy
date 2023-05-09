@@ -6,13 +6,12 @@ import { useEffect } from 'react'
 import { getDefaultSongSettings } from '../SongVisualization/utils'
 
 interface SongPreviewProps {
-  songBytes?: ArrayBuffer
-  songId: string
-  source: SongSource
-  className?: string,
+  source: string
+  savePath:string,
+  midiName:string,
 }
 
-function SongPreview({ songId, savePath, className }: SongPreviewProps) {
+function SongPreview({  savePath,source,midiName  }: SongPreviewProps) {
   const player = Player.player()
   const { data: song, error } = useSong(savePath)
 

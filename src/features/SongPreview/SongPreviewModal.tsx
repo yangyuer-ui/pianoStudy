@@ -15,15 +15,16 @@ type ModalProps = {
 export default function SongPreviewModal({
   show = true,
   onClose = () => {},
-  songMeta = undefined,
+  songMeta,
 }: ModalProps) {
   const { savePath,midiName } = songMeta ?? {}
   const router = useRouter()
   const [playerState, playerActions] = usePlayerState()
 
   useEventListener<KeyboardEvent>('keydown', (event) => {
-    if (!show) return
-
+    if (!show ||  !savePath) {
+      return null
+    }
     if (event.key === ' ') {
       event.preventDefault()
       playerActions.toggle()
@@ -71,7 +72,8 @@ export default function SongPreviewModal({
                 playerActions.play()
               }}
             />
-            { <SongPreview savePath={savePath} source={'midishare'} />}
+            {savePath && <SongPreview source='midishare' savePath={savePath}  midiName=''/>}
+            {/* { <SongPreview savePath={savePath} source={'midishare'} />} */}
           </div>
           <Sizer height={16} />
           <button

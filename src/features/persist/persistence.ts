@@ -31,16 +31,13 @@ export async function saveSong(file: File, title: string, artist: string): Promi
   const song = parseMidi(buffer.buffer)
   const id = await sha1(buffer)
   const uploadedSong: SongMetadata = {
-    id,
-    title,
-    artist,
-    duration: song.duration,
-    file: `uploads/${title}/${artist}`,
-    source: 'upload',
-    difficulty: 0,
+    source:'midishare',
+    fileType:'',
+    midiName:artist,
+    savePath: 'upload'
   }
   const library = getUploadedLibrary()
-  if (library.find((s) => s.id === id)) {
+  if (library.find((s) => s.savePath === id)) {
     throw new Error('Cannot upload the same song twice')
   }
   Storage.set(LOCAL_STORAGE_SONG_LIST_KEY, library.concat(uploadedSong))

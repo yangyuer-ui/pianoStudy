@@ -20,11 +20,11 @@ import { TopBar, SettingsPanel } from './components'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { MidiModal } from './components/MidiModal'
-import { websocket } from 'websocket'
+// import { websocket } from 'websocket'
 
 export function PlaySong() {
   const router = useRouter()
-  const { source, id, savePath, recording }: { source: SongSource; id: string; recording?: string } =
+  const { id,savePath, recording }: { savePath: SongSource; id: string; recording?: string } =
     router.query as any
   const [settingsOpen, setSettingsPanel] = useState(false)
   const [isMidiModalOpen, setMidiModal] = useState(false)

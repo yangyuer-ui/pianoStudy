@@ -206,7 +206,7 @@ async function getMeasuresForChord(
         console.error(e)
         return []
       })
-  return batchedFetch(filename, handler)
+  return batchedFetch('', handler)
 }
 
 const dMajorBackingTracks = [
@@ -230,7 +230,7 @@ type ChordProgression = 'eMinor' | 'dMajor' | 'random'
 async function getBackingTrack(type: ChordProgression): Promise<HTMLAudioElement> {
   const filename = randomChoice(type === 'eMinor' ? eMinorBackingTracks : dMajorBackingTracks)!
   // const url = `/music/irish/Backing Tracks/${filename}`
-  const track = new Audio(url)
+  const track = new Audio('url')
   const deferred: Deferred<HTMLAudioElement> = new Deferred()
   track.addEventListener('canplaythrough', () => deferred.resolve(track))
   track.addEventListener('error', (err) => deferred.reject(err as any))

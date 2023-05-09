@@ -16,6 +16,7 @@ export type SongMetadata = {
   fileType:string
   midiName:string
   savePath:string
+  source:string
 }
 
 export interface Size {

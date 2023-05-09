@@ -37,6 +37,7 @@ export default function Table<T extends Row>({
   const isSearchMatch = (s: RowValue = '') =>
     !search || String(s).toUpperCase().includes(search.toUpperCase())
   const filtered = !search ? rows : rows.filter((row) => row.midiName==search)
+  // const filtered =!search ? rows : rows.filter(array => array.midiName!.match(search));
   const sortField = columns[Math.abs(sortCol) - 1].id
   const sorted = sortBy<T>((row) => row[sortField] ?? 0, sortCol < 0, filtered)
   const gridTemplateColumns = `repeat(${columns.length}, 1fr)`
@@ -56,7 +57,7 @@ export default function Table<T extends Row>({
           className="grid absolute w-full h-full bg-white overflow-y-scroll rounded-md shadow-md"
           style={{ gridTemplateColumns }}
         >
-          {sorted.length === 0 && <h2 className="text-2xl p-5">No results</h2>}
+          {sorted.length === 0 && <h2 className="text-2xl p-5">无数据......</h2>}
           {sorted.map((row: T, i) => {
             return (
               <div
