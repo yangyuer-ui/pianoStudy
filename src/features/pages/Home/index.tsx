@@ -47,7 +47,7 @@ export default function SelectSongPage() {
   const selectedSongMeta = songs.find((s: any) => s.savePath === midiName)
   const uploadedLibrary = getUploadedLibrary()
   useEffect(() => {
-    getMidi();
+    getMidi()
   }, [uploadedLibrary])
 
   useEventListener<KeyboardEvent>('keydown', (event) => {

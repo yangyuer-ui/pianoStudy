@@ -33,7 +33,7 @@ export function PlaySong() {
   const [soundOff, setSoundOff] = useState(false)
   const player = Player.player()
   const synth = useSingleton(() => getSynthStub('acoustic_grand_piano'))
-  let { data: song, error } = useSong(savePath)
+  let { data: song } = useSong(savePath)
   const [songConfig, setSongConfig] = useSongSettings(savePath)
   const [range, setRange] = useState<{ start: number; end: number } | undefined>(undefined)
   const isRecording = !!recording
@@ -98,7 +98,7 @@ export function PlaySong() {
     }
     ws.onerror = function (e) {
       //如果出现连接、处理、接收、发送数据失败的时候触发onerror事件
-      console.log("websocket发生错误" + error);
+      console.log("websocket发生错误" +e);
     }
     type MidiEvent = {
       type: 'on' | 'off'
@@ -107,7 +107,6 @@ export function PlaySong() {
     }
     function parseMidiMessage(event:any): MidiEvent | null {
 console.log('jieshou'+event.data);
-
       const data = event.data
       let status = data[0]
       let command = data.split(',')
