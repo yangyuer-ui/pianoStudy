@@ -159,9 +159,6 @@ console.log('jieshou'+event.data);
 
   return (
     <>
-      <Head>
-        <title>Sightread: Playing</title>
-      </Head>
       <div
         className={clsx(
           // Enable fixed to remove all scrolling.

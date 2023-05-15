@@ -267,7 +267,7 @@ class Player {
     }
 
     if (this.wait && !isHitNote(song.notes[this.currentIndex])) {
-      
+
       return this.currentSongTime - offset
     }
 
@@ -351,7 +351,9 @@ class Player {
   }
 
   playNote(note: SongNote) {
-    // this.synths[note.track].playNote(note.midiNote, note.velocity)
+    if (!this.wait) {
+      this.synths[note.track].playNote(note.midiNote, note.velocity)
+    }
   }
 
   stopNotes(notes: Array<SongNote>) {
@@ -427,7 +429,7 @@ class Player {
         if (this.wait && !this.hitNotes.has(note)) {
           this.currentSongTime = note.time
           // console.log(note);
-          
+
           return
         } else if (!this.hitNotes.has(note) && prevTime < note.time) {
           // Only mark as late during the tick in which it is first played.
@@ -440,7 +442,7 @@ class Player {
       }
       this.currentIndex++
     }
- 
+
   }
 
   toggle() {

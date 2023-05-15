@@ -53,11 +53,12 @@ export default function TopBar({
         <StatusIcon isPlaying={isPlaying} isLoading={isLoading} onTogglePlaying={onTogglePlaying} />
       </div>
       <div className="items-center hidden sm:flex sm:ml-auto h-full text-white">{title}</div>
-      <div className="flex h-full items-center mr-[20px] gap-8">
+      <div className="flex h-full items-center mr-[20px] gap-8" style={{marginRight:'180px'}}>
         <ButtonWithTooltip tooltip="Choose a MIDI device">
           <Midi size={24} onClick={onClickMidi} />
         </ButtonWithTooltip>
-        <ButtonWithTooltip tooltip="Settings" isActive={settingsOpen}>
+        <ButtonWithTooltip 
+        tooltip="Settings" isActive={settingsOpen}>
           <Settings size={24} onClick={onClickSettings} />
         </ButtonWithTooltip>
         {!isMobile() && <VolumeSliderButton />}
