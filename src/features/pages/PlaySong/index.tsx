@@ -24,7 +24,7 @@ import { MidiModal } from './components/MidiModal'
 
 export function PlaySong() {
   const router = useRouter()
-  const { id,savePath, recording }: { savePath: SongSource; id: string; recording?: string } =
+  const { id,savePath,recording }: { savePath: SongSource; id: string; recording?: string } =
     router.query as any
   const [settingsOpen, setSettingsPanel] = useState(false)
   const [isMidiModalOpen, setMidiModal] = useState(false)
@@ -38,6 +38,7 @@ export function PlaySong() {
   const [range, setRange] = useState<{ start: number; end: number } | undefined>(undefined)
   const isRecording = !!recording
   const songMeta = useSongMetadata(id, 'midishare')
+  let [netStatud, setnetStatud] = useState(true)
   useWakeLock()
 
   const hand =
@@ -84,6 +85,15 @@ export function PlaySong() {
   })
 
   useEffect(() => {
+        // 监听网络
+    // 网络由异常到正常时触发
+    window.addEventListener('online', function () {
+      setnetStatud(true);
+    })
+    // 网络由正常到异常触发
+    window.addEventListener('offline', function () {
+      setnetStatud(false);
+    })
     var ws = new WebSocket("ws://localhost:5001/playWeb");
     //申请一个WebSocket对象，参数是服务端地址，同http协议使用http://开头一样，WebSocket协议的url使用ws://开头，另外安全的WebSocket协议使用wss://开头
     ws.onopen = function () {
@@ -159,6 +169,12 @@ console.log('jieshou'+event.data);
 
   return (
     <>
+          <div style={{display: netStatud?'none':'block'}}
+        aria-label="Error message"
+        className="p-6 text-red-900 bg-[#f8d7da] border-[#f5c6cb] m-auto max-w-sm"
+      >
+       请检查网络连接！
+      </div>
       <div
         className={clsx(
           // Enable fixed to remove all scrolling.
@@ -169,7 +185,7 @@ console.log('jieshou'+event.data);
         {!isRecording && (
           <>
             <TopBar
-              title={songMeta?.midiName}
+              title={id}
               isLoading={!playerState.canPlay}
               isPlaying={playerState.playing}
               onTogglePlaying={playerActions.toggle}

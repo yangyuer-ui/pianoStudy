@@ -36,8 +36,7 @@ export default function Table<T extends Row>({
   }
   const isSearchMatch = (s: RowValue = '') =>
     !search || String(s).toUpperCase().includes(search.toUpperCase())
-  const filtered = !search ? rows : rows.filter((row) => row.midiName==search)
-  // const filtered =!search ? rows : rows.filter(array => array.midiName!.match(search));
+  const filtered = !search ? rows : rows.filter((row) => filter.some((f) => isSearchMatch(row[f])))
   const sortField = columns[Math.abs(sortCol) - 1].id
   const sorted = sortBy<T>((row) => row[sortField] ?? 0, sortCol < 0, filtered)
   const gridTemplateColumns = `repeat(${columns.length}, 1fr)`

@@ -133,7 +133,7 @@ class Player {
         this.score.streak.value++
         this.hitNotes.add(lateNote)
         if (this.skipMissedNotes) {
-          // this.playNote(lateNote)
+          this.playNote(lateNote)
         }
         return
       }

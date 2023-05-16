@@ -54,11 +54,11 @@ export default function TopBar({
       </div>
       <div className="items-center hidden sm:flex sm:ml-auto h-full text-white">{title}</div>
       <div className="flex h-full items-center mr-[20px] gap-8" style={{marginRight:'180px'}}>
-        <ButtonWithTooltip tooltip="Choose a MIDI device">
+        <ButtonWithTooltip tooltip="选择midi设备连接">
           <Midi size={24} onClick={onClickMidi} />
         </ButtonWithTooltip>
         <ButtonWithTooltip 
-        tooltip="Settings" isActive={settingsOpen}>
+        tooltip="设置" isActive={settingsOpen}>
           <Settings size={24} onClick={onClickSettings} />
         </ButtonWithTooltip>
         {!isMobile() && <VolumeSliderButton />}

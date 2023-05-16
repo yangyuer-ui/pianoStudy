@@ -87,14 +87,14 @@ export default function SettingsPanel(props: SidebarProps) {
               checked={visualization === 'falling-notes'}
               readOnly
             />
-            <span className="block w-[120px] text-left">坠落的音符</span>
+            <span className="block w-[120px] text-left">瀑布流模式</span>
           </button>
           <button
             className="flex gap-1 items-center justify-center"
             onClick={() => handleVisualization('sheet')}
           >
             <input className="w-5" type="radio" checked={visualization === 'sheet'} readOnly />
-            <span className="block w-[120px] text-left">滚动音符（测试版）</span>
+            <span className="block w-[120px] text-left">五线谱模式</span>
           </button>
         </Section>
         <div className="flex gap-4 flex-grow flex-col sm:flex-row">
